@@ -1,9 +1,9 @@
 # mobile-programming
-### Jessica Aurellia
-### 2201755062
-### LM01
+##### Jessica Aurellia
+##### 2201755062
+##### LM01
 
 Chapter 4 - Stopwatch
-Chapter 5 - Duck & LinearLayout 
-Chapter 6 - MyConstraintLayout
+<br> Chapter 5 - Duck & LinearLayout 
+<br> Chapter 6 - MyConstraintLayout
  
