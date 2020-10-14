@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Duck</string>
+    <string name="duck">It\'s a duck!</string>
+    <string name="duck_desc">(not a real one)</string>
+</resources>

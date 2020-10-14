@@ -1,0 +1,96 @@
+package com.example.chapter4;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.TextView;
+
+import java.util.Locale;
+
+public class MainActivity extends AppCompatActivity {
+
+    private int seconds = 0;
+    private boolean running;
+    private boolean wasRunning;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        if (savedInstanceState != null){
+            seconds = savedInstanceState.getInt("seconds");
+            running = savedInstanceState.getBoolean("running");
+            wasRunning = savedInstanceState.getBoolean("wasRunning");
+        }
+        runTimer();
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("seconds", seconds);
+        savedInstanceState.putBoolean("running", running);
+        savedInstanceState.putBoolean("wasRunning", wasRunning);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (wasRunning){
+            running = true;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        wasRunning = running;
+        running = false;
+    }
+
+    //Stopwatch starts when the start button is clicked.
+    public void onClickStart(View view){
+        running = true;
+    }
+
+    //Stopwatch stops when the stop button is clicked.
+    public void onClickStop(View view){
+        running = false;
+    }
+
+    //Stopwatch resets when the reset button is clicked
+    public void onClickReset(View view){
+        running = false;
+        seconds = 0;
+    }
+
+    private void runTimer(){
+        final TextView timeView = (TextView)findViewById(R.id.time_view);
+        //Handler is an Android class used to schedule code that should run at some point in the future.
+        // This handler is used to schedule the stopwatch code to run every second.
+        final Handler handler = new Handler();
+        // post() method -> code needs to run as soon as possible
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                int hours = seconds/3600;
+                int minutes = (seconds%3600)/60;
+                int secs = seconds%60;
+                String time = String.format(Locale.getDefault(),
+                        "%d:%02d:%02d", hours, minutes, secs);
+                timeView.setText(time);
+                if (running){
+                    seconds++;
+                }
+                // postDelayed() -> code that should be run in the future
+                // Parameters:
+                // 1. Runnable (code that wants to be run)
+                // 2. long (number of milliseconds to delay the code by)
+                handler.postDelayed(this, 1000);
+            }
+        });
+    }
+}
